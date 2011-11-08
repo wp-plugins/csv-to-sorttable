@@ -1,0 +1,32 @@
+/* SORTABLE TABLES */
+
+table.sortable {
+	border-collapse: collapse;
+	clear: both;
+	width: 100%;
+}
+
+table.sortable thead tr {
+	background-color: #56411d;
+	color: #ffff09;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+table.sortable tr:nth-child(even) { background: #fcf7e8; }
+
+table.sortable th,
+table.sortable td {
+	border: 1px solid #56411d;
+	padding: 4px;
+	vertical-align: top;
+	word-wrap: break-word;
+}
+
+table.sortable th:hover:not(.sorttable_nosort) {
+	background: #fa6900;
+}
+
+.sorttable_nosort {
+	cursor: default;
+}
