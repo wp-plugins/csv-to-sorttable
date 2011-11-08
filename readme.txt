@@ -10,7 +10,7 @@ This plugin allows you to import data from a spreadsheet (.csv file format) and 
 
 == Description ==
 
-=General Usage=
+**General Usage**
 
 Add the contents of a .csv file by placing this shortcode into your post or page:
 
@@ -18,26 +18,26 @@ Add the contents of a .csv file by placing this shortcode into your post or page
 
 Be sure to use the absolute URL (including 'http://') when entering the location of your spreadsheet.
 
-=Make Certain Columns Unsortable=
+**Make Certain Columns Unsortable**
 
 `[csv2table source="http://mydomain.com/mydatafile.csv" unsortable="1,6,7"]`
 
 Use a comma-separated list of column numbers to indicate which columns should be treated as unsortable.
 
-=Sort Certain Columns As Numbers or Dates=
+**Sort Certain Columns As Numbers or Dates**
 
 `[csv2table source="http://mydomain.com/mydatafile.csv" number="2,3,4" date="5,6"]`
 
 Use a comma-separated list of column numbers to indicate which columns should be treated as numbers or dates
 for sorting purposes.
 
-=About This Plugin=
+**About This Plugin**
 
 For more information about this plugin, visit: http://mynewsitepreview.com/csv2sorttable/
 
 To see a live demo, visit: http://mynewsitepreview.com/csv2sorttable-wordpress-plugin-live-demo
 
-=About SortTable.js=
+**About SortTable.js**
 
 The sortable table portion of this plugin is made possible by Stuart Langridge's awesome Javascript library.
 
