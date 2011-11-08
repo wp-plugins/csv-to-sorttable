@@ -10,7 +10,7 @@ This plugin allows you to import data from a spreadsheet (.csv file format) and 
 
 == Description ==
 
-Necessity is the mother of invention. In addition to building websites, I run a weekly game night at a local pub near Boston. One of the biggest draws is the popular music game: RockBand 3, and I have ~1,200 songs for folks to choose from. I have a spreadsheet with all of my songs sorted by artist, but people have been asking me to put it online so they can request new songs from home. The solution was this plugin!
+Necessity is the mother of invention. In addition to building websites, I run a weekly game night at a local pub near Boston. One of the biggest draws is the popular music game 'RockBand', and I have ~1,200 songs for folks to choose from. I have a spreadsheet with all of my songs sorted by artist, but people have been asking me to put it online so they can request new songs from home. The solution was this plugin!
 
 CSV to SortTable is great for anyone who keeps track of important information using a spreadsheet. It could be used for product catalogs, inventory lists, or even leaderboards in a competition.
 
