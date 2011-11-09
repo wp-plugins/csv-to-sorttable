@@ -4,7 +4,7 @@ Contributors: sscovil
 Tags: data, table, csv, import, sort, sortable, sorttable
 Requires at least: 3.2.1
 Tested up to: 3.2.1
-Stable tag: 1.0
+Stable tag: 2.0
 
 This plugin allows you to import data from a spreadsheet (.csv file format) and display it in a sortable table using a simple shortcode.
 
@@ -34,6 +34,14 @@ Use a comma-separated list of column numbers to indicate which columns should be
 
 Use a comma-separated list of column numbers to indicate which columns should be treated as numbers or dates
 for sorting purposes.
+
+**Group Certain Rows by Column Value**
+
+As of version 2.0 if you specify a `group` column, the plugin will automatically assign a common class to all adjacent rows containing the same data in a specified column.
+
+`[csv2table source="http://mydomain.com/mydatafile.csv" group="1"]`
+
+You can only assign one `group` column and your .csv file should already be sorted by that column in advance.
 
 **About This Plugin**
 
@@ -92,6 +100,11 @@ table.sortable td.col7 {
 }`
 
 == Changelog ==
+
+= 2.0 =
+* Automatically detects URLs contained in cells and converts them into HTML links
+* Added `group` option, which assigns a unique common class to all adjacent rows containing the same data in the specified column
+* Added `even` and `odd` classes to row groups
 
 = 1.0 =
 * First public release.
