@@ -102,16 +102,16 @@ table.sortable td.col7 {
 == Changelog ==
 
 = 2.1.1 =
-* Cleaned up code by creating a separate function for finding links in cell data
+* Cleaned up code by creating a separate function for finding links in cell data.
 
 = 2.1 =
-* Fixed problem with URLs getting truncated when converted to links
-* Now correcly converts email and www addresses to `mailto:` and `http://` links, respectively
+* Fixed problem with URLs getting truncated when converted to links.
+* Now correcly converts email and www addresses to `mailto:` and `http://` links, respectively.
 
 = 2.0 =
-* Automatically detects URLs contained in cells and converts them into HTML links
-* Added `group` option, which assigns a unique common class to all adjacent rows containing the same data in the specified column
-* Added `even` and `odd` classes to row groups
+* Automatically detects URLs contained in cells and converts them into HTML links.
+* Added `group` option, which assigns a unique common class to all adjacent rows containing the same data in the specified column.
+* Added `even` and `odd` classes to row groups.
 
 = 1.0 =
 * First public release.
