@@ -3,7 +3,7 @@
 Plugin Name: CSV to SortTable
 Plugin URI: http://mynewsitepreview.com/csv2sorttable
 Description: Import data from a CSV file and display it in a sortable table using a simple shortcode.
-Version: 2.1
+Version: 2.1.1
 Author: Shaun Scovil
 Author URI: http://shaunscovil.com/
 License: GPL2
@@ -91,21 +91,8 @@ function csv2sorttable($args){
 				);
 
 				// Check .csv table data to see if the cell contains an email address, proper URL, or www address
-				$email = '';
-				if( preg_match( $email_pattern, $cleancontent, $email ) ) {
-					$replacement = '<a href="mailto:' . $email[0]. '">' . $email[0] . '</a> ';
-					$cleancontent = preg_replace($email_pattern, $replacement, $cleancontent);
-				}
-				$url = '';
-				$www = '';
-				if( preg_match( $url_pattern, $cleancontent, $url ) ) {
-					$replacement = '<a href="' . $url[0]. '">' . $url[0] . '</a> ';
-					$cleancontent = preg_replace($url_pattern, $replacement, $cleancontent);
-				} elseif( preg_match( $www_pattern, $cleancontent, $www ) ) {
-					$replacement = '<a href="http://' . $www[0]. '">' . $www[0] . '</a> ';
-					$cleancontent = preg_replace($www_pattern, $replacement, $cleancontent);
-				}
-
+				$cleancontent = findlinks($cleancontent);
+				
 				// For grouping columns, if the option is set
 				if( $opt_group && $col == $opt_group ) { // If this is the chosen grouping column...
 					if ( $row == 0 ) { // ...and it is the header row...
@@ -154,8 +141,28 @@ function csv2sorttable($args){
 		return $content;
 	}
 }
-
-// Add shortcode
 add_shortcode("csv2table", "csv2sorttable");
 
+function findlinks($text) {
+        $email_pattern = "/[^@\s]+@([-a-z0-9]+\.)+[a-z]{2,}/i";
+        $url_pattern = "/((http|https|ftp|sftp):\/\/)[a-z0-9\-\._]+\/?[a-z0-9_\.\-\?\+\/~=&#;,]*[a-z0-9\/]{1}/si";
+        $www_pattern = "/(www)[a-z0-9\-\._]+\/?[a-z0-9_\.\-\?\+\/~=&#;,]*[a-z0-9\/]{1}/si";
+ 
+        // First, check if the string contains an email address...
+        if( preg_match( $email_pattern, $text, $email ) ) {
+                $replacement = '<a href="mailto:' . $email[0]. '">' . $email[0] . '</a> ';
+                $text = preg_replace($email_pattern, $replacement, $text);
+        }
+        // Next, check if the string contains a URL beginning with http://, https://, ftp://, or sftp://
+        // ...and if not, check for a plain old www address
+        if( preg_match( $url_pattern, $text, $url ) ) {
+                $replacement = '<a href="' . $url[0]. '">' . $url[0] . '</a> ';
+                $text = preg_replace($url_pattern, $replacement, $text);
+        } elseif( preg_match( $www_pattern, $text, $www ) ) {
+                $replacement = '<a href="http://' . $www[0]. '">' . $www[0] . '</a> ';
+                $text = preg_replace($www_pattern, $replacement, $text);
+        }
+ 
+        return $text; 
+}
 ?>
