@@ -4,7 +4,7 @@ Contributors: sscovil
 Tags: data, table, csv, import, sort, sortable, sorttable
 Requires at least: 3.2.1
 Tested up to: 3.2.1
-Stable tag: 2.0
+Stable tag: 2.1
 
 This plugin allows you to import data from a spreadsheet (.csv file format) and display it in a sortable table using a simple shortcode.
 
@@ -14,7 +14,7 @@ Necessity is the mother of invention. In addition to building websites, I run a 
 
 CSV to SortTable is great for anyone who keeps track of important information using a spreadsheet. It could be used for product catalogs, inventory lists, or even leaderboards in a competition.
 
-**General Usage**
+**How To Use**
 
 Add the contents of a .csv file by placing this shortcode into your post or page:
 
@@ -100,6 +100,10 @@ table.sortable td.col7 {
 }`
 
 == Changelog ==
+
+= 2.1 =
+* Fixed problem with URLs getting truncated when converted to links
+* Now correcly converts email and www addresses to `mailto:` and `http://` links, respectively
 
 = 2.0 =
 * Automatically detects URLs contained in cells and converts them into HTML links

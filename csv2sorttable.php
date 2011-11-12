@@ -3,7 +3,7 @@
 Plugin Name: CSV to SortTable
 Plugin URI: http://mynewsitepreview.com/csv2sorttable
 Description: Import data from a CSV file and display it in a sortable table using a simple shortcode.
-Version: 2.0
+Version: 2.1
 Author: Shaun Scovil
 Author URI: http://shaunscovil.com/
 License: GPL2
@@ -54,7 +54,10 @@ function csv2sorttable($args){
 		$evenodd = 'even';
 	}
 	
-	$url_pattern = "/(http:\/\/|https:\/\/|mailto:|ftp:\/\/|sftp:\/\/)(www.|)[0-9a-zA-Z;.\/?:@=_#&%~,+$]+/";
+	// This will be used to check for URLs within table cell data
+	$email_pattern = "/[^@\s]+@([-a-z0-9]+\.)+[a-z]{2,}/i";
+	$url_pattern = "/((http|https|ftp|sftp):\/\/)[a-z0-9\-\._]+\/?[a-z0-9_\.\-\?\+\/~=&#;,]*[a-z0-9\/]{1}/si";
+	$www_pattern = "/(www)[a-z0-9\-\._]+\/?[a-z0-9_\.\-\?\+\/~=&#;,]*[a-z0-9\/]{1}/si";
 	
 	// If the source of the .csv file is valid...
 	if (($handle = fopen($opt_source, "r")) !== FALSE) {
@@ -86,12 +89,23 @@ function csv2sorttable($args){
 					array("'", "'", '"', '"', '-', '--', '...'),
 					$cleancontent
 				);
-				// Check raw .csv data to see if the cell contains a URL
-				$links = '';
-				preg_match($url_pattern, $cleancontent, $links);
-				if( $links[0] ) {
-					$cleancontent = '<a href="' . $links[0] . '">' . $links[0] . '</a>';
+
+				// Check .csv table data to see if the cell contains an email address, proper URL, or www address
+				$email = '';
+				if( preg_match( $email_pattern, $cleancontent, $email ) ) {
+					$replacement = '<a href="mailto:' . $email[0]. '">' . $email[0] . '</a> ';
+					$cleancontent = preg_replace($email_pattern, $replacement, $cleancontent);
 				}
+				$url = '';
+				$www = '';
+				if( preg_match( $url_pattern, $cleancontent, $url ) ) {
+					$replacement = '<a href="' . $url[0]. '">' . $url[0] . '</a> ';
+					$cleancontent = preg_replace($url_pattern, $replacement, $cleancontent);
+				} elseif( preg_match( $www_pattern, $cleancontent, $www ) ) {
+					$replacement = '<a href="http://' . $www[0]. '">' . $www[0] . '</a> ';
+					$cleancontent = preg_replace($www_pattern, $replacement, $cleancontent);
+				}
+
 				// For grouping columns, if the option is set
 				if( $opt_group && $col == $opt_group ) { // If this is the chosen grouping column...
 					if ( $row == 0 ) { // ...and it is the header row...
