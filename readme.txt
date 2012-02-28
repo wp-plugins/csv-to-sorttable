@@ -3,8 +3,8 @@
 Contributors: sscovil
 Tags: data, table, csv, import, sort, sortable, sorttable
 Requires at least: 3.2.1
-Tested up to: 3.2.1
-Stable tag: 2.1.1
+Tested up to: 3.3.1
+Stable tag: 3.0
 
 This plugin allows you to import data from a spreadsheet (.csv file format) and display it in a sortable table using a simple shortcode.
 
@@ -16,40 +16,31 @@ CSV to SortTable is great for anyone who keeps track of important information us
 
 **How To Use**
 
-Add the contents of a .csv file by placing this shortcode into your post or page:
-
 `[csv2table source="http://mydomain.com/mydatafile.csv"]`
 
-Be sure to use the absolute URL (including 'http://') when entering the location of your spreadsheet.
+Add the contents of a .csv file by placing this shortcode into your post or page.
 
-**Make Certain Columns Unsortable**
+**Additional Shortcode Parameters**
 
 `[csv2table source="http://mydomain.com/mydatafile.csv" unsortable="1,6,7"]`
 
 Use a comma-separated list of column numbers to indicate which columns should be treated as unsortable.
 
-**Sort Certain Columns As Numbers or Dates**
-
 `[csv2table source="http://mydomain.com/mydatafile.csv" number="2,3,4" date="5,6"]`
 
-Use a comma-separated list of column numbers to indicate which columns should be treated as numbers or dates
-for sorting purposes.
-
-**Group Certain Rows by Column Value**
-
-As of version 2.0 if you specify a `group` column, the plugin will automatically assign a common class to all adjacent rows containing the same data in a specified column.
+Use a comma-separated list of column numbers to indicate which columns should be treated as numbers or dates for sorting purposes.
 
 `[csv2table source="http://mydomain.com/mydatafile.csv" group="1"]`
 
-You can only assign one `group` column and your .csv file should already be sorted by that column in advance.
+As of version 2.0 if you specify a `group` column, the plugin will automatically assign a common CSS class to all adjacent rows that contain the same data in the specified column. You can only assign one `group` column and your .csv file should already be sorted by that column in advance.
 
 **About This Plugin**
 
 For more information about this plugin, visit: http://mynewsitepreview.com/csv2sorttable/
 
-To see a live demo, visit: http://mynewsitepreview.com/csv2sorttable-wordpress-plugin-live-demo
+To see a live demo, visit: http://mynewsitepreview.com/csv2sorttable-wordpress-plugin-live-demo/
 
-**About SortTable.js**
+**Credit**
 
 The sortable table portion of this plugin is made possible by Stuart Langridge's awesome Javascript library.
 
@@ -65,31 +56,31 @@ Documentation for sorttable.js can be found at: http://www.kryogenix.org/code/br
 
 = How do I style my sortable tables? =
 
-I know, I know. The default colors look pretty nasty in most themes. Also, you may want to style individual columns. Below is the code I used to change the default colors to match my theme on the live demo seen here: http://mynewsitepreview.com/csv2sorttable-wordpress-plugin-live-demo
-
-You can add similar code to your theme's `style.css`:
+Add the following code to your theme's `style.css`, replacing the color codes and other styles as you see fit. Be sure to use `!important` to override the default plugin styles!
 
 `/* Header Row Colors */
 table.sortable thead tr {
-	background-color: #71a7c8 !important;
-	color: #fff !important;
+	background-color: #f2f2f2 !important;
+	color: #1A569F !important;
 }
 
 /*  Highlight Color for Header Row Cells on Hover*/
 table.sortable th:hover:not(.sorttable_nosort) {
-	background: #b3d0e1 !important;
+	background: #d2d2d2 !important;
 }
 
 /* Shading For Even Rows */
-table.sortable tr:nth-child(even) { background: #f6f6f6 !important; }
+table.sortable tr:nth-child(even) { background: #f8f8f8 !important; }
 
 /* Table Border Color */
 table.sortable th,
 table.sortable td {
-	border: 1px solid #71a7c8 !important;
-}
+	border: 1px solid #d5d5d5 !important;
+}`
 
-/*  Style & Width of Particular Columns */
+You can also style individual columns to control column widths, text alignment, etc. by using CSS like this:
+
+`/*  Style for Columns 3 through 7 */
 table.sortable td.col3,
 table.sortable td.col4,
 table.sortable td.col5,
@@ -100,6 +91,11 @@ table.sortable td.col7 {
 }`
 
 == Changelog ==
+
+= 3.0 =
+* Replaced fopen() function with curl for retrieving .csv data
+* Added mnsp_parse_csv() function to replace fgetcsv(), which requires fopen() -- str_getcsv() would have worked with curl, but requires PHP v5.3
+* Cleaned up code
 
 = 2.1.1 =
 * Cleaned up code by creating a separate function for finding links in cell data.
