@@ -16,23 +16,25 @@ CSV to SortTable is great for anyone who keeps track of important information us
 
 **How To Use**
 
-`[csv2table source="http://mydomain.com/mydatafile.csv"]`
-
 Add the contents of a .csv file by placing this shortcode into your post or page.
+
+`[csv2table source="http://mydomain.com/mydatafile.csv"]`
 
 **Additional Shortcode Parameters**
 
-`[csv2table source="http://mydomain.com/mydatafile.csv" unsortable="1,6,7"]`
-
 Use a comma-separated list of column numbers to indicate which columns should be treated as unsortable.
 
-`[csv2table source="http://mydomain.com/mydatafile.csv" number="2,3,4" date="5,6"]`
+`[csv2table source="http://mydomain.com/mydatafile.csv" unsortable="1,6,7"]`
 
 Use a comma-separated list of column numbers to indicate which columns should be treated as numbers or dates for sorting purposes.
 
+`[csv2table source="http://mydomain.com/mydatafile.csv" number="2,3,4" date="5,6"]`
+
+As of version 2.0 if you specify a `group` column, the plugin will automatically assign a common CSS class to all adjacent rows that contain the same data in the specified column.
+
 `[csv2table source="http://mydomain.com/mydatafile.csv" group="1"]`
 
-As of version 2.0 if you specify a `group` column, the plugin will automatically assign a common CSS class to all adjacent rows that contain the same data in the specified column. You can only assign one `group` column and your .csv file should already be sorted by that column in advance.
+You can only assign one `group` column and your .csv file should already be sorted by that column in advance.
 
 **About This Plugin**
 
@@ -95,6 +97,7 @@ table.sortable td.col7 {
 = 3.0 =
 * Replaced fopen() function with curl for retrieving .csv data
 * Added mnsp_parse_csv() function to replace fgetcsv(), which requires fopen() -- str_getcsv() would have worked with curl, but requires PHP v5.3
+* Changed the default CSS to a nicer light blue theme
 * Cleaned up code
 
 = 2.1.1 =
