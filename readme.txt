@@ -4,7 +4,7 @@ Contributors: sscovil
 Tags: data, table, csv, import, sort, sortable, sorttable
 Requires at least: 3.2.1
 Tested up to: 3.3.1
-Stable tag: 3.0
+Stable tag: 3.1
 
 This plugin allows you to import data from a spreadsheet (.csv file format) and display it in a sortable table using a simple shortcode.
 
@@ -35,6 +35,10 @@ As of version 2.0 if you specify a `group` column, the plugin will automatically
 `[csv2table source="http://mydomain.com/mydatafile.csv" group="1"]`
 
 You can only assign one `group` column and your .csv file should already be sorted by that column in advance.
+
+`[csv2table source="http://mydomain.com/mydatafile.csv" icons="true"]`
+
+NEW (since v3.1): You can automatically replace certain file urls with special file-type icons.
 
 **About This Plugin**
 
@@ -93,6 +97,12 @@ table.sortable td.col7 {
 }`
 
 == Changelog ==
+
+= 3.1 =
+* Fixed bug that was adding td .col class without column number (i.e. class was 'col' instead of 'col1', 'col2', etc.)
+* Added `icons` shortcode parameter to replace url links for certain file types (e.g. PDF, MP3, MOV) with file-type icons
+* Renamed functions using the mnsp_ prefix
+* Cleaned up code
 
 = 3.0 =
 * Replaced fopen() function with curl for retrieving .csv data

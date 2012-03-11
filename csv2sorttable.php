@@ -3,7 +3,7 @@
 Plugin Name: CSV to SortTable
 Plugin URI: http://mynewsitepreview.com/csv2sorttable
 Description: Import data from a CSV file and display it in a sortable table using a simple shortcode.
-Version: 3.0
+Version: 3.1
 Author: Shaun Scovil
 Author URI: http://shaunscovil.com/
 License: GPL2
@@ -80,6 +80,8 @@ function csv2sorttable( $args ){
 		$prev_cleancontent = ''; // Store content from the previous cell, to compare when grouping rows
 		$evenodd = 'even';
 	}
+	global $opt_icons;
+	$opt_icons = $args['icons']; // Enable file type icons if set
 	
 	
 	/******************************************/
@@ -162,7 +164,7 @@ function csv2sorttable( $args ){
 				$addclass .= ' col' . $col_num; // Each column gets a unique classe for styling column widths
 				$tr_mid .= '<th class="' . $addclass . '">' . $cleancontent . '</th>';
 			} else { // Cell is in body row <td>
-				$tr_mid .= '<td class="col' . $col . '">' . $cleancontent . '</td>';
+				$tr_mid .= '<td class="col' . $col_num . '">' . $cleancontent . '</td>';
 			}
 			$col_num++;
 			
@@ -237,8 +239,12 @@ if ( !function_exists( 'mnsp_parse_csv' ) ) {
 
 
 // Find URLs and email addresses in .csv data and convert them to HTML links
-if ( !function_exists( 'mnsp_findlinks' ) ) {
+if( !function_exists( 'mnsp_findlinks' ) ) {
 	function mnsp_findlinks( $text ) {
+
+		global $file_url;
+		global $link_text;
+		global $opt_icons;
 
 		// Define regex patterns for email addresses, standard URLs, and WWW addresses
 		define( 'MNSP_EMAIL_PATTERN', '/[^@\s]+@([-a-z0-9]+\.)+[a-z]{2,}/i' );
@@ -253,7 +259,9 @@ if ( !function_exists( 'mnsp_findlinks' ) ) {
 
 		// Next, check if the string contains a URL beginning with http://, https://, ftp://, or sftp://
 		if( preg_match( MNSP_URL_PATTERN, $text, $url ) ) {
-			$replacement = '<a href="' . $url[0]. '">' . $url[0] . '</a> ';
+			$file_url = $url[0];
+			if( $opt_icons ) { mnsp_fileicons( $file_url, $link_text ); } else { $link_text = $file_url; }
+			$replacement = '<a href="' . $url[0]. '">' . $link_text . '</a> ';
 			$text = preg_replace( MNSP_URL_PATTERN, $replacement, $text );
 
 		// ...and if not, check for a plain old www address
@@ -263,6 +271,33 @@ if ( !function_exists( 'mnsp_findlinks' ) ) {
 		}
  
 	return $text; 
+	}
+}
+
+
+
+// Convert link text to icon image for certain file types
+if( !function_exists( 'mnsp_fileicons' ) ) {
+	function mnsp_fileicons( $file_url, $link_text ) {
+
+		global $file_url;
+		global $link_text;
+
+		$link_text = $file_url;
+		
+		// If the URL ends with a file extension that we have an icon for, change the link text to an img tag
+		$file_url_ext = substr( $file_url, -3 ); // Get the last three characters of the url, to compare to available icon file extensions
+		$valid_file_ext = array( 'doc', 'eps', 'gif', 'ind', 'jpg', 'mov', 'mp3', 'pdf', 'ppt', 'xls', 'zip' ); // We have icons for these file extensions
+		foreach( $valid_file_ext as $extension ) {
+			if( $extension == $file_url_ext ) {
+				$icon = plugins_url( '/images/icon_' . $extension . '.png', __FILE__ );
+				$link_text = '<img src="' . $icon . '" class="sortable_link_icon">';
+				// Credit: File icon images courtesy of Blake Knight - http://blog.blake-knight.com/2010/06/15/free-vector-pack-document-icons/
+				return $link_text;
+			}
+		}
+		return;
+	
 	}
 }
 
