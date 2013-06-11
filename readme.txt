@@ -3,100 +3,110 @@
 Contributors: sscovil
 Tags: data, table, csv, import, sort, sortable, sorttable
 Requires at least: 3.2.1
-Tested up to: 3.3.1
-Stable tag: 3.1
+Tested up to: 3.5.1
+Stable tag: 4.0
 
-This plugin allows you to import data from a spreadsheet (.csv file format) and display it in a sortable table using a simple shortcode.
+Import data from a spreadsheet (.csv file format) and display it in a sortable HTML table.
+
 
 == Description ==
 
-Necessity is the mother of invention. In addition to building websites, I run a weekly game night at a local pub near Boston. One of the biggest draws is the popular music game 'RockBand', and I have ~1,200 songs for folks to choose from. I have a spreadsheet with all of my songs sorted by artist, but people have been asking me to put it online so they can request new songs from home. The solution was this plugin!
-
 CSV to SortTable is great for anyone who keeps track of important information using a spreadsheet. It could be used for product catalogs, inventory lists, or even leaderboards in a competition.
+
 
 **How To Use**
 
-Add the contents of a .csv file by placing this shortcode into your post or page.
+Insert a sortable table into any page or post using this shortcode:
 
-`[csv2table source="http://mydomain.com/mydatafile.csv"]`
+`[csv src="http://example.com/myfile.csv"]`
 
-**Additional Shortcode Parameters**
+The result will be a beautiful, semantically-correct HTML table populated with the contents of your file.
 
-Use a comma-separated list of column numbers to indicate which columns should be treated as unsortable.
 
-`[csv2table source="http://mydomain.com/mydatafile.csv" unsortable="1,6,7"]`
+** Optional Features **
 
-Use a comma-separated list of column numbers to indicate which columns should be treated as numbers or dates for sorting purposes.
+This plugin automatically does a few things for you, all of which can be disabled:
 
-`[csv2table source="http://mydomain.com/mydatafile.csv" number="2,3,4" date="5,6"]`
+1. Adds CSS to the table, to make it look nice.
+2. Converts image file URLs into clickable image links.
+3. Converts some other file URLs into clickable file-type icons (.doc, .pdf, .ppt, .xls, .zip).
 
-As of version 2.0 if you specify a `group` column, the plugin will automatically assign a common CSS class to all adjacent rows that contain the same data in the specified column.
+To disable any of these features, use the `disable` shortcode attribute:
 
-`[csv2table source="http://mydomain.com/mydatafile.csv" group="1"]`
+`[csv src="http://example.com/myfile.csv" disable=css]`
+`[csv src="http://example.com/myfile.csv" disable=icons,images]`
+`[csv src="http://example.com/myfile.csv" disable=all]`
 
-You can only assign one `group` column and your .csv file should already be sorted by that column in advance.
+The first shortcode would just disable the plugin CSS; the second would disable both icons and images; and the third would disable all features. You can disable any combination using a comma-separated list.
 
-`[csv2table source="http://mydomain.com/mydatafile.csv" icons="true"]`
 
-NEW (since v3.1): You can automatically replace certain file urls with special file-type icons.
+** Group Classes **
 
-**About This Plugin**
+Let's say you have a table with three columns: Item, Description and Type. You want all table rows of the same Type to have the same CSS class, so you can highlight them in different colors or modify them all at once with JavaScript.
 
-For more information about this plugin, visit: http://mynewsitepreview.com/csv2sorttable/
+This can be done by assigning a column number to the `group` shortcode attribute, like this:
 
-To see a live demo, visit: http://mynewsitepreview.com/csv2sorttable-wordpress-plugin-live-demo/
+`[csv src="http://example.com/myfile.csv" group=3]`
 
-**Credit**
+The result would be a special class assigned to each table row based on the value of the third column.
 
-The sortable table portion of this plugin is made possible by Stuart Langridge's awesome Javascript library.
 
-Documentation for sorttable.js can be found at: http://www.kryogenix.org/code/browser/sorttable/
+** Sorting Options **
+
+Most table data can be sorted alphabetically, but you may have numbers, dates or columns that should not be sortable. To change the sorting rules for one or more columns, use the following shortcode attributes.
+
+`[csv src="http://example.com/myfile.csv" number=2]`
+`[csv src="http://example.com/myfile.csv" date=3]`
+`[csv src="http://example.com/myfile.csv" unsortable=4,5,6]`
+
+The values can be a single column number, or multiple column numbers in a comma-separated list.
+
 
 == Installation ==
 
-1. Upload the entire folder to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Insert the shortcode `[csv2table source="http://mydomain.com/mydatafile.csv"]` in any post or page
+1. Install and activate the plugin via `WP-Admin > Plugins`.
+2. Add shortcode to a post or page: `[csv src="http://example.com/data.csv]`.
+3. Use optional shortcode attributes to modify table behavior (see description).
 
-== Frequently Asked Questions ==
+TinyMCE button coming soon!
 
-= How do I style my sortable tables? =
 
-Add the following code to your theme's `style.css`, replacing the color codes and other styles as you see fit. Be sure to use `!important` to override the default plugin styles!
+== Screenshots ==
 
-`/* Header Row Colors */
-table.sortable thead tr {
-	background-color: #f2f2f2 !important;
-	color: #1A569F !important;
-}
+1. Default sortable table shows off some key features.
+2. Table sorted by `Description` column (A-Z).
+3. Table sorted by `Description` column (Z-A).
+4. Table sorted by `Group` column (A-Z).
 
-/*  Highlight Color for Header Row Cells on Hover*/
-table.sortable th:hover:not(.sorttable_nosort) {
-	background: #d2d2d2 !important;
-}
 
-/* Shading For Even Rows */
-table.sortable tr:nth-child(even) { background: #f8f8f8 !important; }
+== Credits ==
 
-/* Table Border Color */
-table.sortable th,
-table.sortable td {
-	border: 1px solid #d5d5d5 !important;
-}`
+This plugin utilizes some excellent open source scripts, functions and images whose creators deserve to be recognized.
 
-You can also style individual columns to control column widths, text alignment, etc. by using CSS like this:
+1. Stuart Langridge wrote [sorttable.js], the JavaScript that inspired this plugin and makes it possible to sort tables by clicking on the column headers.
+2. V.Krishn wrote a handy [PHP function] that enables users of PHP < 5.3 to utilize the `str_getcsv()` function that powers this plugin.
+3. Blake Knight created the beautiful [file type icons] used in this plugin and made them free for all.
 
-`/*  Style for Columns 3 through 7 */
-table.sortable td.col3,
-table.sortable td.col4,
-table.sortable td.col5,
-table.sortable td.col6,
-table.sortable td.col7 {
-	text-align: center !important;
-	width: 10% !important;
-}`
+[sorttable.js]: http://www.kryogenix.org/code/browser/sorttable/
+[PHP function]: http://github.com/insteps/phputils
+[file type icons]: http://blog.blake-knight.com/2010/06/15/free-vector-pack-document-icons/
+
 
 == Changelog ==
+
+= 4.0 =
+* Major code revision!
+* Replaced custom CSV file import function with WordPress core function: `wp_remote_fopen()`.
+* Replaced custom CSV parser function with `str_getcsv()` (including support for PHP < 5.3).
+* Replaced custom HTML/link handler function with WordPress core function: `make_clickable()`.
+* JavaScript and CSS is optional and only loads on posts & pages where shortcode is used.
+* Added single shortcode attribute to easily disable features: css, icons, images, or all.
+* Removed file type icons for image and media files.
+* Added feature that converts image file URLs into images with links using jQuery.
+* Modified row and column classes and 'group' class feature.
+* Killed `even` and `odd` classes introduced in v2.0; use CSS selectors `:nth-child(even)` and `:nth-child(odd)`.
+* Added shotcode `[csv src=""]` and retained legacy support for `[csv2sorttable source=""]`.
+* Included test.csv file as default if source file is defined.
 
 = 3.1 =
 * Fixed bug that was adding td .col class without column number (i.e. class was 'col' instead of 'col1', 'col2', etc.)
@@ -124,3 +134,9 @@ table.sortable td.col7 {
 
 = 1.0 =
 * First public release.
+
+
+== Upgrade Notice ==
+
+= 4.0 =
+This is a major update! Steps were taken to ensure backwards compatibility, but the entire plugin was re-written from the ground up so there are bound to be cases where it does not perform as expected. The changes made vastly improve performance, usability and (to some extent) security.
