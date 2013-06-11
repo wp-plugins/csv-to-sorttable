@@ -14,7 +14,7 @@ Import data from a spreadsheet (.csv file format) and display it in a sortable H
 CSV to SortTable is great for anyone who keeps track of important information using a spreadsheet. It could be used for product catalogs, inventory lists, or even leaderboards in a competition.
 
 
-**How To Use**
+= How To Use =
 
 Insert a sortable table into any page or post using this shortcode:
 
@@ -23,7 +23,7 @@ Insert a sortable table into any page or post using this shortcode:
 The result will be a beautiful, semantically-correct HTML table populated with the contents of your file.
 
 
-** Optional Features **
+= Optional Features =
 
 This plugin automatically does a few things for you, all of which can be disabled:
 
@@ -40,7 +40,7 @@ To disable any of these features, use the `disable` shortcode attribute:
 The first shortcode would just disable the plugin CSS; the second would disable both icons and images; and the third would disable all features. You can disable any combination using a comma-separated list.
 
 
-** Group Classes **
+= Group Classes =
 
 Let's say you have a table with three columns: Item, Description and Type. You want all table rows of the same Type to have the same CSS class, so you can highlight them in different colors or modify them all at once with JavaScript.
 
@@ -51,7 +51,7 @@ This can be done by assigning a column number to the `group` shortcode attribute
 The result would be a special class assigned to each table row based on the value of the third column.
 
 
-** Sorting Options **
+= Sorting Options =
 
 Most table data can be sorted alphabetically, but you may have numbers, dates or columns that should not be sortable. To change the sorting rules for one or more columns, use the following shortcode attributes.
 
